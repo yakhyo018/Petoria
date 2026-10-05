@@ -23,7 +23,6 @@ registerEnumType(ProductSpecies, {
 export enum ProductGender {
 	MALE = 'MALE',
 	FEMALE = 'FEMALE',
-	UNISEX = 'UNISEX',
 }
 registerEnumType(ProductGender, {
 	name: 'ProductGender',

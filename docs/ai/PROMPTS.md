@@ -63,7 +63,7 @@ Use this at the end of every session to persist the context.
 ### Resume Context
 
 ```text
-Read docs/*.md in Petoria. Summarize the current migration state, open decisions,
+Read AGENTS.md and docs/ai/*.md in Petoria. Summarize the current migration state, open decisions,
 and the top 3 tasks from NEXT_STEPS.md. Do not change code yet.
 ```
 
@@ -79,7 +79,7 @@ business code.
 ### Plan the Property → Product Domain Migration
 
 ```text
-Using the target products schema in docs/BACKEND_MIGRATION.md, plan the
+Using the target products schema in docs/ai/BACKEND_MIGRATION.md, plan the
 Property → Product domain migration for petoria-api and petoria-batch:
 module/resolver/service/DTO/enum/schema renames, GraphQL operation renames,
 related references (LikeGroup, ViewGroup, NotificationGroup, memberProperties,
@@ -92,7 +92,7 @@ List breaking changes. Make plan first, do not implement.
 ```text
 PLEASE IMPLEMENT THE APPROVED PRODUCT DOMAIN PLAN on the modification branch.
 After each module: run tsc --noEmit for both apps and nest build.
-Do not touch the frontend. Update docs/COMPLETED_TASKS.md and docs/NEXT_STEPS.md
+Do not touch the frontend. Update docs/ai/COMPLETED_TASKS.md and docs/ai/NEXT_STEPS.md
 at the end.
 ```
 

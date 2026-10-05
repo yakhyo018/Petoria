@@ -109,7 +109,7 @@ The WebSocket gateway (`socket.gateway.ts`, event `message`) is unchanged.
 | `_id` | ObjectId | Yes | | `_id` |
 | `productType` | enum | Yes | `PET \| FOOD \| TOY \| ACCESSORY` | `propertyType` (`APARTMENT \| VILLA \| HOUSE`) |
 | `productSpecies` | enum | Yes | `DOG \| CAT \| BIRD \| FISH` | New |
-| `productGender` | enum | Yes | `MALE \| FEMALE \| UNISEX` | New (values chosen, see D7) |
+| `productGender` | enum | Yes | `MALE \| FEMALE` | New (fixed by `AGENTS.md`, see D7) |
 | `productStatus` | enum | Yes (default) | `ACTIVE \| SOLD \| DELETE`, default `ACTIVE` | `propertyStatus` |
 | `productLocation` | enum | Yes | Kept from Nestar: `SEOUL \| BUSAN \| INCHEON \| DAEGU \| GYEONGJU \| GWANGJU \| CHONJU \| DAEJON \| JEJU` | `propertyLocation` |
 | `productTitle` | string | Yes | | `propertyTitle` |

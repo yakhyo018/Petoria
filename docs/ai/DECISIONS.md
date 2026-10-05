@@ -55,7 +55,7 @@
 - **Decision**: `Property` was replaced by `Product` everywhere (module, resolver, service, DTOs, enums, schema, collection `products`, GraphQL operations, group enums, batch), following the Petoria ERD.
 - **Why**: Petoria is a pet shop. Real-estate fields (address, square, beds, rooms, barter, rent, constructedAt) have no meaning here.
 - **Choices made where the ERD gives no values**:
-  - `productGender`: `MALE | FEMALE | UNISEX`. `UNISEX` covers food, toys and accessories, because the field is NN.
+  - `productGender`: `MALE | FEMALE`, as fixed by `AGENTS.md`. An earlier `UNISEX` value was removed. The field is NN, so non-pet products (food, toys, accessories) must still pick a value. Revisit if this becomes a problem.
   - `productLocation`: kept the Nestar Korean city list.
   - `MemberType.AGENT` kept, so the operation is `getAgentProducts`. Renaming to `SELLER` is a separate decision.
   - `notifications.propertyId` → `productId`, so all references are consistent. The ERD still shows `propertyId` and should be updated.

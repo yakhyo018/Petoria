@@ -29,7 +29,7 @@ Session date: 2026-10-05
 | `apps/petoria-batch/src/batch.service.ts` | Imports → `../../petoria-api/...`, welcome string → Petoria |
 | `apps/petoria-batch/src/batch.module.ts` | Schema imports → `../../petoria-api/...` |
 | `apps/petoria-batch/test/app.e2e-spec.ts` | `NestarBatchModule` (non-existent) → `BatchModule` |
-| `docs/*` | Migration documentation created (this folder) |
+| `docs/ai/*` | Migration documentation created (moved from `docs/` to `docs/ai/`) |
 | `.env` (git-ignored) | `MONGO_DEV` / `MONGO_PROD` database `/Nestar` → `/Petoria` |
 
 Not changed in the rename layer: GraphQL schema, DTOs, enums, Mongoose models, collections, business logic, WebSocket gateway. These changed later in the Domain Migration below.
@@ -50,7 +50,7 @@ Result: 241 errors → **0 errors**, 204 warnings (mostly `no-unsafe-*` from `an
 | --- | --- |
 | `components/property/*` → `components/product/product.{module,resolver,service}.ts` | `git mv` + rename to `ProductModule`, `ProductResolver`, `ProductService` |
 | `libs/dto/property/*` → `libs/dto/product/product{,.input,.update}.ts` | `Product`, `Products`, `ProductInput`, `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry`, `ProductUpdate`. Removed real-estate fields and `SquaresRange`. Added `productSpecies`, `productGender`, `speciesList`, `genderList` |
-| `libs/enums/property.enum.ts` → `product.enum.ts` | `ProductType` (PET/FOOD/TOY/ACCESSORY), new `ProductSpecies` (DOG/CAT/BIRD/FISH), new `ProductGender` (MALE/FEMALE/UNISEX), `ProductStatus`, `ProductLocation` |
+| `libs/enums/property.enum.ts` → `product.enum.ts` | `ProductType` (PET/FOOD/TOY/ACCESSORY), new `ProductSpecies` (DOG/CAT/BIRD/FISH), new `ProductGender` (MALE/FEMALE), `ProductStatus`, `ProductLocation` |
 | `schemas/Property.model.ts` → `Product.model.ts` | ERD fields, collection `products` |
 | `libs/enums/{like,view,comment,notification}.enum.ts` | `PROPERTY` → `PRODUCT` |
 | `schemas/Member.model.ts`, `libs/dto/member/member.ts` | `memberProperties` → `memberProducts` |
@@ -61,6 +61,18 @@ Result: 241 errors → **0 errors**, 204 warnings (mostly `no-unsafe-*` from `an
 | `apps/petoria-batch/src/*` | `batchTopProperties` → `batchTopProducts`, `BATCH_TOP_PROPERTIES` → `BATCH_TOP_PRODUCTS`, `memberProducts` in the agent rank formula |
 
 `grep -i propert apps/` → 0 matches.
+
+## Agent Instructions and Skills
+
+| File | Purpose |
+| --- | --- |
+| `AGENTS.md` | Agent rules: read `docs/ai` first, project shape, domain rules (product enums, `MemberType` unchanged), workflow, validation |
+| `SKILLS.md` | Index of the skills |
+| `skills/backend-migration/SKILL.md` | Workflow to continue the backend migration: rules, leftover sweep, validation, docs update |
+| `skills/product-logic/SKILL.md` | Review checklist for product schema, DTO, enum, filter, guard and naming consistency |
+| `CLAUDE.md` | Imports `AGENTS.md` for Claude Code |
+| `docs/*` → `docs/ai/*` | Docs moved to match `AGENTS.md` |
+| `product.enum.ts` | `ProductGender.UNISEX` removed to match `AGENTS.md` (`MALE`, `FEMALE`) |
 
 ## Validation Status
 

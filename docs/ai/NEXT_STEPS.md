@@ -7,7 +7,7 @@ Priority order: 1 = first.
 | # | Task | Notes |
 | --- | --- | --- |
 | 1 | Seed the `/Petoria` DB: admin account, a few agents, sample products for every `ProductType`/`ProductSpecies` | DB is empty |
-| 2 | Confirm enum values with product requirements: `ProductGender` (MALE/FEMALE/UNISEX), `ProductLocation` (Korean cities) | `DECISIONS.md` D7 |
+| 2 | Confirm with product requirements: `productGender` is NN with only `MALE`/`FEMALE` (how to handle food/toys/accessories?), `ProductLocation` (Korean cities) | `AGENTS.md`, `DECISIONS.md` D7 |
 | 3 | Decide `MemberType.AGENT` → `SELLER` (also `getAgents`, `getAgentProducts`, `batchTopAgents`) | Optional, breaking |
 | 4 | Update the ERD: `notifications.propertyId` → `productId`, reference names `properties_views`/`properties_likes` | Code already uses `productId` |
 | 5 | Review the unique index `{productType, productLocation, productTitle, productPrice}` for a shop (same product in many listings?) | — |
@@ -40,5 +40,5 @@ Priority order: 1 = first.
 | # | Task | Notes |
 | --- | --- | --- |
 | 1 | Keep `COMPLETED_TASKS.md` / `NEXT_STEPS.md` updated each session | — |
-| 2 | Export the final ERD image into `docs/` | — |
+| 2 | Export the final ERD image into `docs/ai/` | — |
 | 3 | Add a GraphQL operations reference with example queries for the frontend team | — |
