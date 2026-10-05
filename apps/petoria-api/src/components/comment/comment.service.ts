@@ -5,7 +5,7 @@ import { CommentInput, CommentsInquiry } from '../../libs/dto/comment/comment.in
 import { Comment, Comments } from '../../libs/dto/comment/comment';
 import { Direction, Messages } from '../../libs/enums/common.enum';
 import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
-import { PropertyService } from '../property/property.service';
+import { ProductService } from '../product/product.service';
 import { MemberService } from '../member/member.service';
 import { BoardArticleService } from '../board-article/board-article.service';
 import { CommentUpdate } from '../../libs/dto/comment/comment.update';
@@ -16,7 +16,7 @@ import { lookupAuthMemberLiked, lookupMember } from '../../libs/config';
 export class CommentService {
 	constructor(
 		@InjectModel('Comment') private readonly commentModel: Model<Comment>,
-		private readonly propertyService: PropertyService,
+		private readonly productService: ProductService,
 		private readonly memberService: MemberService,
 		private readonly boardArticleService: BoardArticleService,
 	) {}
@@ -33,10 +33,10 @@ export class CommentService {
 		}
 
 		switch (input.commentGroup) {
-			case CommentGroup.PROPERTY:
-				await this.propertyService.propertyStatsEditor({
+			case CommentGroup.PRODUCT:
+				await this.productService.productStatsEditor({
 					_id: input.commentRefId,
-					targetKey: 'propertyComments',
+					targetKey: 'productComments',
 					modifier: 1,
 				});
 				break;

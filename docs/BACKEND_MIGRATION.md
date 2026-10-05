@@ -28,7 +28,7 @@
 Migrate Nestar into Petoria in two isolated phases:
 
 1. **Safe Rename Layer (done)**: rename project/app identity from Nestar to Petoria without changing business behavior, GraphQL contract, DTOs, Mongoose models or MongoDB collections.
-2. **Domain Migration (planned)**: replace the real-estate `Property` domain with a pet-shop `Product` domain (see the ERD target below). This is a breaking change and is planned separately.
+2. **Domain Migration (done)**: replace the real-estate `Property` domain with the pet-shop `Product` domain from the Petoria ERD. This is a breaking GraphQL/data change.
 
 ## Naming Changes
 
@@ -48,84 +48,86 @@ Migrate Nestar into Petoria in two isolated phases:
 
 ## Module Changes
 
-No NestJS module was renamed, added or removed.
+Phase 1 changed paths only. Phase 2 renamed the `property` component to `product`.
 
 | Module | Path | Change |
 | --- | --- | --- |
 | `AppModule` | `apps/petoria-api/src/app.module.ts` | Path only |
 | `ComponentsModule` | `apps/petoria-api/src/components/components.module.ts` | Path only |
-| `AuthModule`, `MemberModule`, `PropertyModule`, `BoardArticleModule`, `CommentModule`, `LikeModule`, `ViewModule`, `FollowModule` | `apps/petoria-api/src/components/*` | Path only |
+| `PropertyModule` → `ProductModule` (`PropertyResolver`/`PropertyService` → `ProductResolver`/`ProductService`) | `components/property/*` → `components/product/product.*` | Renamed (`git mv`) |
+| `AuthModule`, `MemberModule`, `BoardArticleModule`, `CommentModule`, `LikeModule`, `ViewModule`, `FollowModule` | `apps/petoria-api/src/components/*` | Imports/references to Product only |
+| DTOs, enum, schema | `libs/dto/property/*` → `libs/dto/product/*`, `libs/enums/property.enum.ts` → `product.enum.ts`, `schemas/Property.model.ts` → `Product.model.ts` | Renamed (`git mv`) and rewritten to ERD fields |
 | `DatabaseModule` | `apps/petoria-api/src/database`, `apps/petoria-batch/src/database` | Path only |
 | `SocketModule` | `apps/petoria-api/src/socket` | Path only |
 | `BatchModule` | `apps/petoria-batch/src/batch.module.ts` | Relative imports `../../nestar-api/...` → `../../petoria-api/...` |
 
 ## GraphQL Changes
 
-**None.** The schema is byte-for-byte compatible with Nestar. Current operations:
+Phase 1: none. Phase 2: all Property operations, types and enums were renamed to Product. This is a **breaking change** for clients. Verified by introspecting the running API.
 
 | Resolver | Queries | Mutations |
 | --- | --- | --- |
 | Member | `getMember`, `getAgents`, `getAllMembersByAdmin` | `signup`, `login`, `updateMember`, `checkAuth`, `checkAuthRoles`, `likeTargetMember`, `updateMemberByAdmin`, `imageUploader`, `imagesUploader` |
-| Property | `getProperty`, `getProperties`, `getFavorites`, `getVisited`, `getAgentProperties`, `getAllPropertiesByAdmin` | `createProperty`, `updateProperty`, `likeTargetProperty`, `updatePropertyByAdmin`, `removePropertyByAdmin` |
+| Product | `getProduct(productId)`, `getProducts`, `getFavorites`, `getVisited`, `getAgentProducts`, `getAllProductsByAdmin` | `createProduct`, `updateProduct`, `likeTargetProduct(productId)`, `updateProductByAdmin`, `removeProductByAdmin(productId)` |
 | BoardArticle | `getBoardArticle`, `getBoardArticles`, `getAllBoardArticlesByAdmin` | `createBoardArticle`, `updateBoardArticle`, `likeTargetBoardArticle`, `updateBoardArticleByAdmin`, `removeBoardArticleByAdmin` |
 | Comment | `getComments` | `createComment`, `updateComment`, `removeCommentByAdmin` |
 | Follow | `getMemberFollowings`, `getMemberFollowers` | `subscribe`, `unsubscribe` |
 
-WebSocket gateway (`socket.gateway.ts`, transport `websocket`): event `message`, unchanged.
+The WebSocket gateway (`socket.gateway.ts`, event `message`) is unchanged.
 
-Planned rename for the Domain Migration phase:
-
-| Current | Planned |
+| Before (Nestar) | After (Petoria) |
 | --- | --- |
 | `createProperty` / `updateProperty` | `createProduct` / `updateProduct` |
-| `getProperty` / `getProperties` | `getProduct` / `getProducts` |
-| `getAgentProperties` | `getSellerProducts` (if `AGENT` → `SELLER`, see D7) |
-| `likeTargetProperty` | `likeTargetProduct` |
-| `getAllPropertiesByAdmin`, `updatePropertyByAdmin`, `removePropertyByAdmin` | `getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin` |
-| `getFavorites`, `getVisited` | Unchanged names, return type `Products` |
-| Types `Property`, `Properties`, `PropertyInput`, `PropertiesInquiry`, `PropertyUpdate` | `Product`, `Products`, `ProductInput`, `ProductsInquiry`, `ProductUpdate` |
+| `getProperty(propertyId)` / `getProperties` | `getProduct(productId)` / `getProducts` |
+| `getAgentProperties` | `getAgentProducts` (`MemberType.AGENT` kept, see D7) |
+| `likeTargetProperty(propertyId)` | `likeTargetProduct(productId)` |
+| `getAllPropertiesByAdmin`, `updatePropertyByAdmin`, `removePropertyByAdmin(propertyId)` | `getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin(productId)` |
+| `getFavorites`, `getVisited` | Same names, return `Products` |
+| Types `Property`, `Properties`, `PropertyInput`, `PropertiesInquiry`, `AgentPropertiesInquiry`, `AllPropertiesInquiry`, `PropertyUpdate` | `Product`, `Products`, `ProductInput`, `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry`, `ProductUpdate` |
 | Enums `PropertyType`, `PropertyStatus`, `PropertyLocation` | `ProductType`, `ProductStatus`, `ProductLocation`, plus new `ProductSpecies`, `ProductGender` |
-| Enum values `LikeGroup.PROPERTY`, `ViewGroup.PROPERTY`, `NotificationGroup.PROPERTY` | `PRODUCT` |
+| Enum value `PROPERTY` in `LikeGroup`, `ViewGroup`, `CommentGroup`, `NotificationGroup` | `PRODUCT` |
+| Search filters `roomsList`, `bedsList`, `squaresRange`, `options` (barter/rent) | Removed. New `speciesList`, `genderList` |
+| `ALPISearch.propertyStatus`, `propertyLocationList` | `productStatus`, `productLocationList` |
+| Input type `SquaresRange` | Removed |
+| `Member.memberProperties` | `Member.memberProducts` |
 
 ## MongoDB Collection and Schema Changes
 
-Safe Rename Layer: **no collection or schema changes.**
+| Item | Before | After |
+| --- | --- | --- |
+| Database (`.env`) | `/Nestar` | `/Petoria` (new, empty, so no data migration is needed) |
+| Mongoose model / collection | `Property` / `properties` | `Product` / `products` |
+| `Member.memberProperties` | int | `memberProducts` |
+| `Notification.propertyId` (ref `Property`) | ObjectId | `productId` (ref `Product`). The ERD still shows `propertyId`, see D7 |
+| Group value `PROPERTY` in `likes.likeGroup`, `views.viewGroup`, `comments.commentGroup`, `notifications.notificationGroup` | `PROPERTY` | `PRODUCT` |
+| Collections `members`, `likes`, `views`, `comments`, `follows`, `boardArticles`, `notices`, `notifications` | — | Names unchanged |
 
-| Item | Status |
-| --- | --- |
-| Mongoose model `Property` | Unchanged |
-| Collection `properties` | Unchanged |
-| Collections `members`, `likes`, `views`, `comments`, `follows`, `boardArticles`, `notices`, `notifications` | Unchanged |
-| Schema fields such as `propertyTitle`, `propertyPrice`, `propertyRooms` | Unchanged |
-| `.env` database name | `/Nestar` → `/Petoria` (new empty database) |
+`products` schema (`schemas/Product.model.ts`), matching the Petoria ERD (`petoria.dmm`):
 
-Target `products` collection (from the Petoria ERD, MongoDB diagram `petoria.dmm`):
+| Field | Type | NN | Values / default | Was |
+| --- | --- | --- | --- | --- |
+| `_id` | ObjectId | Yes | | `_id` |
+| `productType` | enum | Yes | `PET \| FOOD \| TOY \| ACCESSORY` | `propertyType` (`APARTMENT \| VILLA \| HOUSE`) |
+| `productSpecies` | enum | Yes | `DOG \| CAT \| BIRD \| FISH` | New |
+| `productGender` | enum | Yes | `MALE \| FEMALE \| UNISEX` | New (values chosen, see D7) |
+| `productStatus` | enum | Yes (default) | `ACTIVE \| SOLD \| DELETE`, default `ACTIVE` | `propertyStatus` |
+| `productLocation` | enum | Yes | Kept from Nestar: `SEOUL \| BUSAN \| INCHEON \| DAEGU \| GYEONGJU \| GWANGJU \| CHONJU \| DAEJON \| JEJU` | `propertyLocation` |
+| `productTitle` | string | Yes | | `propertyTitle` |
+| `productPrice` | number (double) | Yes | | `propertyPrice` |
+| `productViews`, `productLikes`, `productComments`, `productRank` | number (int) | Yes (default) | default `0` | `property*` |
+| `productImages` | string[] | Yes | | `propertyImages` |
+| `productDesc` | string | No | | `propertyDesc` |
+| `memberId` | ObjectId → `Member` | Yes | | `memberId` |
+| `soldAt`, `deletedAt` | date | No | | same |
+| `createdAt`, `updatedAt` | date | Yes | timestamps | same |
 
-| Field | Type | NN | Source in `properties` |
-| --- | --- | --- | --- |
-| `_id` | ObjectId | Yes | `_id` |
-| `productType` | enum `PET \| FOOD \| TOY \| ACCESSORY` | Yes | `propertyType` (`APARTMENT \| VILLA \| HOUSE`) |
-| `productSpecies` | enum `DOG \| CAT \| BIRD \| FISH` | Yes | New |
-| `productGender` | enum (values TBD) | Yes | New |
-| `productStatus` | enum | Yes | `propertyStatus` (`ACTIVE \| SOLD \| DELETE`) |
-| `productLocation` | enum | Yes | `propertyLocation` (Korean cities) |
-| `productTitle` | string | Yes | `propertyTitle` |
-| `productPrice` | double | Yes | `propertyPrice` |
-| `productViews`, `productLikes`, `productComments`, `productRank` | int | Yes | `property*` counters |
-| `productImages` | string[] | Yes | `propertyImages` |
-| `productDesc` | string | No | `propertyDesc` |
-| `memberId` | ObjectId | Yes | `memberId` |
-| `soldAt`, `deletedAt` | date | No | `soldAt`, `deletedAt` |
-| `createdAt`, `updatedAt` | date | Yes | timestamps |
+Removed fields: `propertyAddress`, `propertySquare`, `propertyBeds`, `propertyRooms`, `propertyBarter`, `propertyRent`, `constructedAt`.
 
-Fields dropped from the real-estate model: `propertyAddress`, `propertySquare`, `propertyBeds`, `propertyRooms`, `propertyBarter`, `propertyRent`, `constructedAt`.
-
-Related references to update in the Domain Migration: `Member.memberProperties` counter, `Notification.propertyId`, `likeRefId` / `viewRefId` / `commentRefId` targets with group `PROPERTY`, batch job `batchTopProperties`.
+Unique index (kept from Nestar): `{ productType, productLocation, productTitle, productPrice }`.
 
 ## Compatibility Notes
 
-- Clients (Petoria-next, existing Nestar frontend) keep using the current GraphQL operations until the Domain Migration is approved.
-- The frontend can show Petoria / pet-shop terminology while still calling the `Property` GraphQL operations internally.
-- The database schema stays compatible with Nestar, but Petoria now uses its own `/Petoria` database, which starts empty.
-- `dist/` must be rebuilt after the rename; old `dist/apps/nestar-*` outputs are obsolete. Deploy scripts that run `dist/apps/nestar-api/main` must switch to `dist/apps/petoria-api/main`.
-- A `Property` → `Product` migration affects API contracts, DTOs, Mongoose models, batch jobs, frontend queries and stored data, and needs a data migration script.
+- The GraphQL contract is **not** compatible with the old Nestar frontend. Petoria-next must migrate its `apollo/*` documents (see `FRONTEND_MIGRATION.md`).
+- The Petoria database is new, so no `properties` → `products` data migration is needed. If Nestar data is ever imported, the field mapping above applies, and `PROPERTY` group values must be rewritten to `PRODUCT`.
+- `dist/` must be rebuilt. Deploy scripts must run `dist/apps/petoria-api/main` and `dist/apps/petoria-batch/main`.
+- The batch job `batchTopProperties` is now `batchTopProducts` (cron name `BATCH_TOP_PRODUCTS`). The agent rank formula uses `memberProducts`.

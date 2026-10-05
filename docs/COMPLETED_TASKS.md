@@ -32,22 +32,50 @@ Session date: 2026-10-05
 | `docs/*` | Migration documentation created (this folder) |
 | `.env` (git-ignored) | `MONGO_DEV` / `MONGO_PROD` database `/Nestar` → `/Petoria` |
 
-Not changed on purpose: GraphQL schema, DTOs, enums, Mongoose models, collections, business logic, WebSocket gateway.
+Not changed in the rename layer: GraphQL schema, DTOs, enums, Mongoose models, collections, business logic, WebSocket gateway. These changed later in the Domain Migration below.
+
+## Lint Setup
+
+| File | Change |
+| --- | --- |
+| `package.json` | `eslint` 8 → 9, added `@eslint/js` 9, `typescript-eslint` 8, `globals` 16. Removed `@typescript-eslint/eslint-plugin` and `@typescript-eslint/parser` v6. `lint` glob `{src,apps,libs,test}` → `apps` |
+| `eslint.config.mjs` | `no-unsafe-*` and other type-aware `any` rules → `warn`. `no-unused-vars` allows `_`-prefixed args, caught errors and rest siblings. `prefer-const` uses `destructuring: 'all'` |
+| `apps/**` | Removed unused imports/vars, `(returns) =>` → `() =>`, unused resolver args → `_memberId`/`_server`, `Number[]` → `number[]`, Prettier formatting |
+
+Result: 241 errors → **0 errors**, 204 warnings (mostly `no-unsafe-*` from `any`).
+
+## Domain Migration: Property → Product (ERD)
+
+| File / Module | Change |
+| --- | --- |
+| `components/property/*` → `components/product/product.{module,resolver,service}.ts` | `git mv` + rename to `ProductModule`, `ProductResolver`, `ProductService` |
+| `libs/dto/property/*` → `libs/dto/product/product{,.input,.update}.ts` | `Product`, `Products`, `ProductInput`, `ProductsInquiry`, `AgentProductsInquiry`, `AllProductsInquiry`, `ProductUpdate`. Removed real-estate fields and `SquaresRange`. Added `productSpecies`, `productGender`, `speciesList`, `genderList` |
+| `libs/enums/property.enum.ts` → `product.enum.ts` | `ProductType` (PET/FOOD/TOY/ACCESSORY), new `ProductSpecies` (DOG/CAT/BIRD/FISH), new `ProductGender` (MALE/FEMALE/UNISEX), `ProductStatus`, `ProductLocation` |
+| `schemas/Property.model.ts` → `Product.model.ts` | ERD fields, collection `products` |
+| `libs/enums/{like,view,comment,notification}.enum.ts` | `PROPERTY` → `PRODUCT` |
+| `schemas/Member.model.ts`, `libs/dto/member/member.ts` | `memberProperties` → `memberProducts` |
+| `schemas/Notification.model.ts` | `propertyId` → `productId` (ref `Product`) |
+| `libs/config.ts` | `availablePropertySorts` → `availableProductSorts`, removed `availableOptions`, lookups `favoriteProduct`/`visitedProduct` |
+| `components/like/like.service.ts`, `components/view/view.service.ts` | `getFavoriteProducts`, `getVisitedProducts`, `$lookup from: 'products'` |
+| `components/comment/*`, `components/components.module.ts` | Use `ProductModule`/`ProductService.productStatsEditor` |
+| `apps/petoria-batch/src/*` | `batchTopProperties` → `batchTopProducts`, `BATCH_TOP_PROPERTIES` → `BATCH_TOP_PRODUCTS`, `memberProducts` in the agent rank formula |
+
+`grep -i propert apps/` → 0 matches.
 
 ## Validation Status
 
 | Check | Command | Result |
 | --- | --- | --- |
-| Remaining "nestar" references in source/config | `grep -rIi nestar` (excluding `node_modules`, `dist`, `.git`) | 0 matches |
-| Typecheck API | `npx tsc --noEmit -p apps/petoria-api/tsconfig.app.json` | Pass |
-| Typecheck batch | `npx tsc --noEmit -p apps/petoria-batch/tsconfig.app.json` | Pass |
-| Build API | `npx nest build petoria-api` | Pass (webpack) |
-| Build batch | `npx nest build petoria-batch` | Pass (webpack) |
-| Lint setup | `npx eslint "apps/**/*.ts"` | **Fixed**: upgraded to `eslint` 9 + `typescript-eslint` 8 + `@eslint/js` 9 + `globals` 16 (removed `@typescript-eslint/*` v6), so the existing flat `eslint.config.mjs` works. `lint` script glob `{src,apps,libs,test}` → `apps` |
-| Lint findings | same | 241 errors, 24 warnings in 36/82 files (pre-existing code, not yet fixed) |
-| Runtime smoke test (start API/batch against DB) | `npm run start:dev` | Not run |
+| Remaining "nestar" / "propert" in `apps/` | `grep -rIi` | 0 matches |
+| Typecheck API and batch | `npx tsc --noEmit -p apps/petoria-{api,batch}/tsconfig.app.json` | Pass |
+| Build API and batch | `npx nest build petoria-api` / `petoria-batch` | Pass |
+| Lint | `npx eslint "apps/**/*.ts"` | 0 errors, 204 warnings |
+| API boot + GraphQL introspection | `PORT_API=3017 node dist/apps/petoria-api/main` | Pass: connects to the `/Petoria` dev DB. Schema exposes `getProduct(s)`, `createProduct`, …, `Product` fields match the ERD, enums correct, `Member.memberProducts` |
+| Query smoke test | `getProducts(input:{page:1,limit:5,search:{speciesList:[DOG]}})` | Pass: `{"list":[]}` (empty DB) |
+| Batch boot | `PORT_BATCH=3018 node dist/apps/petoria-batch/main` | Pass: `Welcome to Petoria BATCH Server!` |
+| Mutations (signup/createProduct/like), WebSocket | — | Not run |
 | Unit / e2e tests | `npm test`, `npm run test:e2e` | Not run |
 
 ## Frontend (Petoria-next)
 
-Not started. Only the repository was cloned, connected and pushed.
+Not started. The repository is connected and an empty `modification` branch was pushed.

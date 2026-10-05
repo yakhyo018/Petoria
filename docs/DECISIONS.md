@@ -4,11 +4,11 @@
 | --- | --- | --- |
 | D1 | New repositories cloned from Nestar with full git history | Accepted |
 | D2 | Two-phase migration: Safe Rename Layer first, Domain Migration later | Accepted |
-| D3 | Keep GraphQL API, DTOs, Mongoose models and collections unchanged in phase 1 | Accepted |
+| D3 | Keep GraphQL API, DTOs, Mongoose models and collections unchanged in phase 1 | Accepted (phase 1 done) |
 | D4 | Rename app folders with `git mv` | Accepted |
 | D5 | Switch `.env` Mongo database name `/Nestar` → `/Petoria` | Accepted |
 | D6 | Backend first, frontend after | Accepted |
-| D7 | Target domain model `Product` from the Petoria ERD | Proposed |
+| D7 | Domain model `Product` from the Petoria ERD | Accepted, implemented |
 | D8 | Work on a `modification` branch | Accepted |
 
 ## D1. Clone with full history
@@ -50,16 +50,18 @@
 - **Decision**: Finish Petoria backend (rename, then domain) before touching Petoria-next. The frontend repo is only connected to GitHub.
 - **Why**: The frontend depends on the GraphQL contract. Migrating it before the contract is final would mean doing the work twice.
 
-## D7. Target domain model
+## D7. Domain model `Product`
 
-- **Decision (proposed)**: Replace `Property` with `Product` as defined in the ERD (`productType`, `productSpecies`, `productGender`, …). See `BACKEND_MIGRATION.md`.
-- **Open questions**:
-  - Values of `productGender` and `productLocation`.
-  - Whether `MemberType.AGENT` becomes `SELLER`.
-  - Whether to rename the `properties` collection or create a new `products` collection.
-  - The ERD still shows `notifications.propertyId`; it should be `productId`.
-- **Risks**: Breaking API change and data migration.
-- **Alternatives**: Keep `Property` internally and only relabel in the UI. This is cheap, but leaves a permanent naming mismatch.
+- **Decision**: `Property` was replaced by `Product` everywhere (module, resolver, service, DTOs, enums, schema, collection `products`, GraphQL operations, group enums, batch), following the Petoria ERD.
+- **Why**: Petoria is a pet shop. Real-estate fields (address, square, beds, rooms, barter, rent, constructedAt) have no meaning here.
+- **Choices made where the ERD gives no values**:
+  - `productGender`: `MALE | FEMALE | UNISEX`. `UNISEX` covers food, toys and accessories, because the field is NN.
+  - `productLocation`: kept the Nestar Korean city list.
+  - `MemberType.AGENT` kept, so the operation is `getAgentProducts`. Renaming to `SELLER` is a separate decision.
+  - `notifications.propertyId` → `productId`, so all references are consistent. The ERD still shows `propertyId` and should be updated.
+  - Unique index `{type, location, title, price}` kept.
+- **Risks**: Breaking GraphQL change for the frontend. The enum values above may need adjustment once product requirements are final.
+- **Alternatives**: Keep `Property` internally and relabel only in the UI. Rejected because it leaves a permanent naming mismatch.
 
 ## D8. `modification` branch
 

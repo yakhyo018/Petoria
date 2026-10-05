@@ -13,7 +13,7 @@ Stack: Next.js (pages router), Apollo Client (`apollo/client.ts`, `apollo/user/*
 | 3 | Replace "Nestar" in empty-state texts (`MyProperties`, `MyFavorites`, `RecentlyVisited`, `MemberProperties`, `MemberFollowers`, `MemberFollowings`, `community/index`, `account/join`) | 2 |
 | 4 | Update `.env.development` / `.env.local` API URLs if the backend port or host changes | Backend deploy |
 | 5 | UI terminology: relabel Property → Product, Agent → Seller in i18n strings and visible text only | 2 |
-| 6 | After backend Domain Migration: rename GraphQL documents in `apollo/user/*` and `apollo/admin/*` and regenerate types in `libs/types` | Backend phase 2 |
+| 6 | Backend Domain Migration is done. Rename GraphQL documents in `apollo/user/*` and `apollo/admin/*` and regenerate types in `libs/types` | Backend phase 2 |
 | 7 | Rename pages and components (table below) and update routes and links | 6 |
 | 8 | Replace real-estate filters (beds, rooms, square, rent/barter) with species, gender and type filters | 6 |
 | 9 | Swap images and assets in `public/` for pet-shop content | — |
@@ -54,19 +54,22 @@ Stack: Next.js (pages router), Apollo Client (`apollo/client.ts`, `apollo/user/*
 
 ## GraphQL Query/Mutation Rename Plan
 
-Apply only after the backend renames the operations. Until then, the frontend keeps the current names.
+The backend has already renamed these operations, so the current frontend documents will fail against Petoria API until they are updated.
 
 | Current | Planned |
 | --- | --- |
 | `GET_PROPERTY`, `GET_PROPERTIES` | `GET_PRODUCT`, `GET_PRODUCTS` |
-| `GET_AGENT_PROPERTIES` | `GET_SELLER_PRODUCTS` |
-| `GET_AGENTS` | `GET_SELLERS` (only if `AGENT` → `SELLER`) |
+| `GET_AGENT_PROPERTIES` | `GET_AGENT_PRODUCTS` (`getAgentProducts`) |
+| `GET_AGENTS` | Unchanged (`AGENT` kept) |
 | `CREATE_PROPERTY`, `UPDATE_PROPERTY` | `CREATE_PRODUCT`, `UPDATE_PRODUCT` |
 | `LIKE_TARGET_PROPERTY` | `LIKE_TARGET_PRODUCT` |
 | `GET_ALL_PROPERTIES_BY_ADMIN`, `UPDATE_PROPERTY_BY_ADMIN`, `REMOVE_PROPERTY_BY_ADMIN` | `GET_ALL_PRODUCTS_BY_ADMIN`, `UPDATE_PRODUCT_BY_ADMIN`, `REMOVE_PRODUCT_BY_ADMIN` |
 | `GET_FAVORITES`, `GET_VISITED` | Unchanged names, fields `property*` → `product*` |
 | Field selections `propertyTitle`, `propertyPrice`, `propertyImages`, … | `productTitle`, `productPrice`, `productImages`, … |
 | Removed fields `propertyBeds`, `propertyRooms`, `propertySquare`, `propertyRent`, `propertyBarter`, `propertyAddress`, `constructedAt` | Remove from documents and UI |
+| Arguments `propertyId` | `productId` |
+| Search `roomsList`, `bedsList`, `squaresRange`, `options` | `speciesList`, `genderList` |
+| — | New fields `productSpecies`, `productGender` |
 
 ## UI Terminology Changes
 
