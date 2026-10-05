@@ -30,8 +30,9 @@ Session date: 2026-10-05
 | `apps/petoria-batch/src/batch.module.ts` | Schema imports → `../../petoria-api/...` |
 | `apps/petoria-batch/test/app.e2e-spec.ts` | `NestarBatchModule` (non-existent) → `BatchModule` |
 | `docs/*` | Migration documentation created (this folder) |
+| `.env` (git-ignored) | `MONGO_DEV` / `MONGO_PROD` database `/Nestar` → `/Petoria` |
 
-Not changed on purpose: GraphQL schema, DTOs, enums, Mongoose models, collections, business logic, WebSocket gateway, `.env` database name.
+Not changed on purpose: GraphQL schema, DTOs, enums, Mongoose models, collections, business logic, WebSocket gateway.
 
 ## Validation Status
 
@@ -42,7 +43,8 @@ Not changed on purpose: GraphQL schema, DTOs, enums, Mongoose models, collection
 | Typecheck batch | `npx tsc --noEmit -p apps/petoria-batch/tsconfig.app.json` | Pass |
 | Build API | `npx nest build petoria-api` | Pass (webpack) |
 | Build batch | `npx nest build petoria-batch` | Pass (webpack) |
-| Lint | `npx eslint "apps/**/*.ts"` | **Fails, pre-existing**: `eslint.config.mjs` imports `typescript-eslint`, `@eslint/js`, `globals`, which are not installed (eslint 8 in `package.json`). The same failure happens on the original Nestar code |
+| Lint setup | `npx eslint "apps/**/*.ts"` | **Fixed**: upgraded to `eslint` 9 + `typescript-eslint` 8 + `@eslint/js` 9 + `globals` 16 (removed `@typescript-eslint/*` v6), so the existing flat `eslint.config.mjs` works. `lint` script glob `{src,apps,libs,test}` → `apps` |
+| Lint findings | same | 241 errors, 24 warnings in 36/82 files (pre-existing code, not yet fixed) |
 | Runtime smoke test (start API/batch against DB) | `npm run start:dev` | Not run |
 | Unit / e2e tests | `npm test`, `npm run test:e2e` | Not run |
 

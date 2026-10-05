@@ -6,7 +6,7 @@
 | D2 | Two-phase migration: Safe Rename Layer first, Domain Migration later | Accepted |
 | D3 | Keep GraphQL API, DTOs, Mongoose models and collections unchanged in phase 1 | Accepted |
 | D4 | Rename app folders with `git mv` | Accepted |
-| D5 | Keep `.env` Mongo database name `/Nestar` for now | Pending |
+| D5 | Switch `.env` Mongo database name `/Nestar` → `/Petoria` | Accepted |
 | D6 | Backend first, frontend after | Accepted |
 | D7 | Target domain model `Product` from the Petoria ERD | Proposed |
 | D8 | Work on a `modification` branch | Accepted |
@@ -40,10 +40,10 @@
 
 ## D5. Mongo database name
 
-- **Decision**: Pending. `MONGO_DEV` and `MONGO_PROD` still end with `/Nestar`.
-- **Option A, keep `/Nestar`**: Existing data stays available. The name is internal only.
-- **Option B, switch to `/Petoria`**: Clean branding, but connects to a new empty database. It needs seed data or a `mongodump`/`mongorestore` copy.
-- **Recommendation**: Keep `/Nestar` until the Domain Migration. Then create `/Petoria` with migrated `products` data in a single step.
+- **Decision**: `MONGO_DEV` and `MONGO_PROD` now end with `/Petoria` (was `/Nestar`). Same Atlas cluster.
+- **Why**: Clean project identity, and the Petoria data is isolated from Nestar.
+- **Risks**: `/Petoria` starts empty. Nestar members, properties and articles are not visible. MongoDB creates the database and collections on first write.
+- **Alternatives**: Keep `/Nestar` (data available, naming mismatch), or copy data with `mongodump --db Nestar` + `mongorestore --nsFrom 'Nestar.*' --nsTo 'Petoria.*'`.
 
 ## D6. Backend first
 

@@ -44,7 +44,7 @@ Migrate Nestar into Petoria in two isolated phases:
 | API welcome string | `Welcome to Nestar API server!` | `Welcome to Petoria API server!` | Done |
 | Batch welcome string | `Welcome to Nestar BATCH Server!` | `Welcome to Petoria BATCH Server!` | Done |
 | Batch e2e test import | `NestarBatchModule` (did not exist) | `BatchModule` | Done (fixes broken import) |
-| `.env` Mongo database label | `/Nestar` | `/Nestar` | **Not changed**, pending decision (see `DECISIONS.md` D5) |
+| `.env` Mongo database label | `/Nestar` | `/Petoria` | Done (new empty database, see `DECISIONS.md` D5) |
 
 ## Module Changes
 
@@ -97,7 +97,7 @@ Safe Rename Layer: **no collection or schema changes.**
 | Collection `properties` | Unchanged |
 | Collections `members`, `likes`, `views`, `comments`, `follows`, `boardArticles`, `notices`, `notifications` | Unchanged |
 | Schema fields such as `propertyTitle`, `propertyPrice`, `propertyRooms` | Unchanged |
-| `.env` database name `/Nestar` | Unchanged (pending decision) |
+| `.env` database name | `/Nestar` → `/Petoria` (new empty database) |
 
 Target `products` collection (from the Petoria ERD, MongoDB diagram `petoria.dmm`):
 
@@ -126,6 +126,6 @@ Related references to update in the Domain Migration: `Member.memberProperties` 
 
 - Clients (Petoria-next, existing Nestar frontend) keep using the current GraphQL operations until the Domain Migration is approved.
 - The frontend can show Petoria / pet-shop terminology while still calling the `Property` GraphQL operations internally.
-- The database stays compatible with the Nestar schema; both apps can point to the same database.
+- The database schema stays compatible with Nestar, but Petoria now uses its own `/Petoria` database, which starts empty.
 - `dist/` must be rebuilt after the rename; old `dist/apps/nestar-*` outputs are obsolete. Deploy scripts that run `dist/apps/nestar-api/main` must switch to `dist/apps/petoria-api/main`.
 - A `Property` → `Product` migration affects API contracts, DTOs, Mongoose models, batch jobs, frontend queries and stored data, and needs a data migration script.

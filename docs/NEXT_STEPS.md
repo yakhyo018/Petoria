@@ -6,8 +6,8 @@ Priority order: 1 = first.
 
 | # | Task | Notes |
 | --- | --- | --- |
-| 1 | Decide the Mongo database name (`/Nestar` vs `/Petoria`) | `DECISIONS.md` D5 |
-| 2 | Fix the lint setup: install `typescript-eslint`, `@eslint/js`, `globals`, upgrade eslint to v9 (flat config), or revert to `.eslintrc.js` | Pre-existing failure |
+| 1 | Seed `/Petoria` DB (admin account, sample data) or copy from `/Nestar` | DB renamed, `DECISIONS.md` D5 |
+| 2 | Fix lint findings: 241 errors / 24 warnings in 36 files (mostly `no-unsafe-*` and `no-unused-vars`; 21 auto-fixable). Decide which `no-unsafe-*` rules to relax | Lint now runs (ESLint 9) |
 | 3 | Rewrite `README.md` (currently the NestJS template) with a Petoria description, setup, env vars and scripts | — |
 | 4 | Finalize the Product domain spec: `productGender` and `productLocation` values, `AGENT` → `SELLER`?, collection strategy | `DECISIONS.md` D7 |
 | 5 | Domain Migration: `property` component → `product` (module, resolver, service, DTOs, enums, schema) | Breaking change |
