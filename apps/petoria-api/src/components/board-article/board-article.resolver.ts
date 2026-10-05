@@ -22,7 +22,7 @@ export class BoardArticleResolver {
 	constructor(private readonly boardArticleService: BoardArticleService) {}
 
 	@UseGuards(AuthGuard)
-	@Mutation((returns) => BoardArticle)
+	@Mutation(() => BoardArticle)
 	public async createBoardArticle(
 		@Args('input') input: BoardArticleInput,
 		@AuthMember('_id') memberId: ObjectId,
@@ -32,7 +32,7 @@ export class BoardArticleResolver {
 	}
 
 	@UseGuards(WithoutGuard)
-	@Query((returns) => BoardArticle)
+	@Query(() => BoardArticle)
 	public async getBoardArticle(
 		@Args('articleId') input: string,
 		@AuthMember('_id') memberId: ObjectId,
@@ -54,7 +54,7 @@ export class BoardArticleResolver {
 	}
 
 	@UseGuards(WithoutGuard)
-	@Query((returns) => BoardArticles)
+	@Query(() => BoardArticles)
 	public async getBoardArticles(
 		@Args('input') input: BoardArticlesInquiry,
 		@AuthMember('_id') memberId: ObjectId,
@@ -78,10 +78,10 @@ export class BoardArticleResolver {
 
 	@Roles(MemberType.ADMIN)
 	@UseGuards(RolesGuard)
-	@Query((returns) => BoardArticles)
+	@Query(() => BoardArticles)
 	public async getAllBoardArticlesByAdmin(
 		@Args('input') input: AllBoardArticlesInquiry,
-		@AuthMember('_id') memberId: ObjectId,
+		@AuthMember('_id') _memberId: ObjectId,
 	): Promise<BoardArticles> {
 		console.log('Query: getAllBoardArticlesByAdmin');
 		return await this.boardArticleService.getAllBoardArticlesByAdmin(input);
@@ -92,7 +92,7 @@ export class BoardArticleResolver {
 	@Mutation(() => BoardArticle)
 	public async updateBoardArticleByAdmin(
 		@Args('input') input: BoardArticleUpdate,
-		@AuthMember('_id') memberId: ObjectId,
+		@AuthMember('_id') _memberId: ObjectId,
 	): Promise<BoardArticle> {
 		console.log('Mutation: updateBoardArticleByAdmin');
 		input._id = shapeIntoMongoObjectId(input._id);
@@ -101,10 +101,10 @@ export class BoardArticleResolver {
 
 	@Roles(MemberType.ADMIN)
 	@UseGuards(RolesGuard)
-	@Mutation((returns) => BoardArticle)
+	@Mutation(() => BoardArticle)
 	public async removeBoardArticleByAdmin(
 		@Args('articleId') input: string,
-		@AuthMember('_id') memberId: ObjectId,
+		@AuthMember('_id') _memberId: ObjectId,
 	): Promise<BoardArticle> {
 		console.log('Mutation: removeBoardArticleByAdmin');
 		const articleId = shapeIntoMongoObjectId(input);

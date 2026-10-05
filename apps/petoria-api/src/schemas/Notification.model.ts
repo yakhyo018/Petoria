@@ -1,5 +1,9 @@
 import { Schema } from 'mongoose';
-import { NotificationGroup, NotificationStatus, NotificationType } from '../libs/enums/notification.enum';
+import {
+	NotificationGroup,
+	NotificationStatus,
+	NotificationType,
+} from '../libs/enums/notification.enum';
 
 const NotificationSchema = new Schema(
 	{
