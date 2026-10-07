@@ -18,12 +18,16 @@ Priority order: 1 = first.
 
 ## Frontend Migration
 
+Steps 1–4 below were done on 2026-10-07 (see `COMPLETED_TASKS.md`).
+
 | # | Task | Notes |
 | --- | --- | --- |
-| 1 | Safe rename on the `modification` branch (`package.json`, `_document.tsx`, layouts, Footer, empty-state texts) | — |
-| 2 | Rename GraphQL documents in `apollo/user/*`, `apollo/admin/*` to Product operations and fields | Required: the backend contract already changed |
-| 3 | Rename pages/components (`property/*` → `product/*`) and replace filters (beds/rooms/square → species/gender) | `FRONTEND_MIGRATION.md` |
-| 4 | UI terminology and assets | — |
+| 1 | Replace raster assets that still show real estate or the Nestar name: `public/img/banner/products.png` (contains "NESTAR"), 3D fiber images `public/img/fiber/*`, `public/img/apartmentMain.png`, `public/img/product/*`, `header*.svg` | Real pet-shop photos needed |
+| 2 | Replace the placeholder type banners `public/img/banner/types/*.svg` with photos | — |
+| 3 | Decide how `productGender` should work for FOOD/TOY/ACCESSORY (form always requires it because the backend field is NN) | Linked to Backend Cleanup #2 |
+| 4 | QA with seeded data: product cards, detail page, add/edit product, likes, comments, admin products page, chat | Needs Backend Cleanup #1 (seed) |
+| 5 | Homepage "Events" section still shows Korean city festivals; replace with pet events or remove | Optional |
+| 6 | Rewrite `README.md` (Next.js template) for Petoria-next | — |
 
 ## Testing
 

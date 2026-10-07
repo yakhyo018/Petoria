@@ -1,6 +1,6 @@
 # Frontend Migration Plan: nestar-next to Petoria-next
 
-Status: **Not started.** The repo is cloned and connected to `yakhyo018/Petoria-next`. Backend migration comes first (see `DECISIONS.md` D6).
+Status: **Steps 1–8 and 10 done (2026-10-07), step 9 (assets) partly done.** See `COMPLETED_TASKS.md` → Frontend Migration. Remaining work is in `NEXT_STEPS.md`.
 
 Stack: Next.js (pages router), Apollo Client (`apollo/client.ts`, `apollo/user/*`, `apollo/admin/*`), next-i18next, SCSS, MUI.
 

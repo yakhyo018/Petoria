@@ -88,6 +88,31 @@ Result: 241 errors → **0 errors**, 204 warnings (mostly `no-unsafe-*` from `an
 | Mutations (signup/createProduct/like), WebSocket | — | Not run |
 | Unit / e2e tests | `npm test`, `npm run test:e2e` | Not run |
 
-## Frontend (Petoria-next)
+## Frontend Migration (Petoria-next)
 
-Not started. The repository is connected and an empty `modification` branch was pushed.
+Session date: 2026-10-07. Branch `modification`, commits `1d291f8` → `940a3bf`, all pushed to `yakhyo018/Petoria-next`.
+
+| Phase | Commit | Change |
+| --- | --- | --- |
+| 0 | `1d291f8` | `CLAUDE.md` with frontend agent rules (read `../Petoria/docs/ai` first, Yarn only, typecheck after each phase) |
+| 1 Safe rename | `657ca80` | `package.json` name `petoria-next`, `<title>`/meta in layouts, `_document.tsx` SEO text, Footer copyright, join/community/mobile placeholder texts |
+| 2 Domain | `4ba7e85` | `property/*` → `product/*` for pages, components, types, enum, scss and `public/img/product` (`git mv`). Apollo documents use `getProduct(productId)`, `getProducts`, `getAgentProducts`, `createProduct`, `updateProduct`, `likeTargetProduct(productId)`, `getAllProductsByAdmin`, `updateProductByAdmin`, `removeProductByAdmin(productId)`, `memberProducts`. Real-estate fields removed, `productSpecies`/`productGender` added. Cards, detail page, add-product form, header filter and product filter use type/species/gender instead of beds/rooms/square/rent/barter. `LikeGroup`/`ViewGroup`/`CommentGroup`/`NotificationGroup` use `PRODUCT` |
+| 3 Seller | `5c24177` | Agent UI layer → Seller: `pages/agent` → `pages/seller`, `AgentCard` → `SellerCard`, `TopAgents(Card)` → `TopSellers(Card)`, `agent/ReviewCard` → `seller/ReviewCard`, `scss/pc/agent` → `scss/pc/seller`, labels. GraphQL `getAgents`/`getAgentProducts` and `MemberType.AGENT` unchanged (D7) |
+| 4 UI copy | `940a3bf` | FAQ and About copy rewritten for a pet shop, i18n (`Rooms` → `Species`, `Home / For Rent` → `Home / Pet Shop`, kr/ru product/seller wording), logo SVGs show "PETORIA" + paw, placeholder SVG banners for PET/FOOD/TOY/ACCESSORY, new icons `paw.svg`, `tag.svg`, `gender.svg` |
+
+UI decisions:
+
+- Gender is shown on cards and detail only when `productType === PET` (the backend still requires it for every product, so the add form always asks for it).
+- The old "Rent/Barter" labels are replaced by the sale status (`For sale` / `Sold`).
+- Header filter "Year Built" and "square meter" rows and the detail page "Floor Plans" section were removed. Price range filter is kept.
+
+### Frontend Validation
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Typecheck | `npx tsc --noEmit -p .` | Pass after every phase |
+| Apollo documents vs live schema | `graphql.validate` of all 36 documents against introspection of `localhost:3007/graphql` | 36/36 valid |
+| Production build | `yarn build` | Pass, 21 routes |
+| Dev smoke test | `yarn dev`, open `/`, `/product`, `/seller` | Pages render, `getProducts` returns `{list: []}` without errors (empty DB) |
+| Leftovers | `grep -rIi "nestar\|propert"` in `libs pages apollo scss` | 0 matches |
+| Mutations (signup, createProduct, like, comment), admin pages, chat | — | Not run (DB is empty) |
