@@ -100,6 +100,9 @@ Session date: 2026-10-07. Branch `modification`, commits `1d291f8` → `940a3bf`
 | 3 Seller | `5c24177` | Agent UI layer → Seller: `pages/agent` → `pages/seller`, `AgentCard` → `SellerCard`, `TopAgents(Card)` → `TopSellers(Card)`, `agent/ReviewCard` → `seller/ReviewCard`, `scss/pc/agent` → `scss/pc/seller`, labels. GraphQL `getAgents`/`getAgentProducts` and `MemberType.AGENT` unchanged (D7) |
 | 4 UI copy | `940a3bf` | FAQ and About copy rewritten for a pet shop, i18n (`Rooms` → `Species`, `Home / For Rent` → `Home / Pet Shop`, kr/ru product/seller wording), logo SVGs show "PETORIA" + paw, placeholder SVG banners for PET/FOOD/TOY/ACCESSORY, new icons `paw.svg`, `tag.svg`, `gender.svg` |
 
+| 5 Skills | `902ad00` | `SKILLS.md` + `skills/frontend-migration`, `skills/product-ui` (frontend versions of the backend skills), `skills/user-project` (UI/UX and responsive work, no GraphQL changes), `skills/admin-project` (placeholder) |
+| 6 Logo | see git log | Animated pet-shop logo: coral badge with heart-pad paw, "Petoria" + "PET SHOP"; toes hop, heart beats, ring rotates (CSS inside SVG, off for `prefers-reduced-motion`); static favicon; hover bounce in header/footer |
+
 UI decisions:
 
 - Gender is shown on cards and detail only when `productType === PET` (the backend still requires it for every product, so the add form always asks for it).
