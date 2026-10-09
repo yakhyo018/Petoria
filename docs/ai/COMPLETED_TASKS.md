@@ -102,6 +102,8 @@ Session date: 2026-10-07. Branch `modification`, commits `1d291f8` → `940a3bf`
 
 | 5 Skills | `902ad00` | `SKILLS.md` + `skills/frontend-migration`, `skills/product-ui` (frontend versions of the backend skills), `skills/user-project` (UI/UX and responsive work, no GraphQL changes), `skills/admin-project` (placeholder) |
 | 6 Logo | see git log | Animated pet-shop logo: coral badge with heart-pad paw, "Petoria" + "PET SHOP"; toes hop, heart beats, ring rotates (CSS inside SVG, off for `prefers-reduced-motion`); static favicon; hover bounce in header/footer |
+| 7 Skill install | `a69aabf` | `npx skills add avdlee/swiftui-agent-skill@swiftui-expert-skill` (first result of `npx skills find "swiftui liquid glass"`) into `.claude/skills`, `skills-lock.json`. SwiftUI-only; its Liquid Glass reference was used as design guidance |
+| 8 Pet design | see git log | Liquid glass SCSS mixins + palette tokens, new homepage `PetHero` (replaces 3D house photos), pet promo (replaces skyline video), glass navbar/search, paw-pattern gradient banners on inner pages |
 
 UI decisions:
 
