@@ -6,7 +6,7 @@ Priority order: 1 = first.
 
 | # | Task | Notes |
 | --- | --- | --- |
-| 1 | Seed the `/Petoria` DB: admin account, a few agents, sample products for every `ProductType`/`ProductSpecies` | DB is empty |
+| 1 | ~~Seed the `/Petoria` DB~~ Done 2026-10-10: `npm run seed` (`scripts/seed`) | Re-run is safe; `--force` adds interactions again |
 | 2 | Confirm with product requirements: `productGender` is NN with only `MALE`/`FEMALE` (how to handle food/toys/accessories?), `ProductLocation` (Korean cities) | `AGENTS.md`, `DECISIONS.md` D7 |
 | 3 | Decide `MemberType.AGENT` → `SELLER` (also `getAgents`, `getAgentProducts`, `batchTopAgents`) | Optional, breaking |
 | 4 | Update the ERD: `notifications.propertyId` → `productId`, reference names `properties_views`/`properties_likes` | Code already uses `productId` |

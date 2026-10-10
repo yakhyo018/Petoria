@@ -1,0 +1,78 @@
+{
+	"password": "petoria123",
+	"members": [
+		{ "memberNick": "petadmin", "memberPhone": "01000000001", "memberType": "ADMIN", "avatar": "CAT", "memberFullName": "Petoria Admin", "memberDesc": "Keeping Petoria safe and friendly." },
+		{ "memberNick": "happypaws", "memberPhone": "01011110001", "memberType": "AGENT", "avatar": "DOG", "memberFullName": "Happy Paws Kennel", "memberAddress": "Gangnam-gu, Seoul", "memberDesc": "Family kennel raising healthy puppies and selling quality dog supplies since 2015." },
+		{ "memberNick": "meowmart", "memberPhone": "01011110002", "memberType": "AGENT", "avatar": "CAT", "memberFullName": "Meow Mart", "memberAddress": "Haeundae-gu, Busan", "memberDesc": "Registered cattery and cat shop. Kittens, food, beds and toys for happy cats." },
+		{ "memberNick": "birdnest", "memberPhone": "01011110003", "memberType": "AGENT", "avatar": "BIRD", "memberFullName": "Bird Nest Aviary", "memberAddress": "Suseong-gu, Daegu", "memberDesc": "Hand-raised budgies and cockatiels, seed mixes, cages and toys." },
+		{ "memberNick": "aquazone", "memberPhone": "01011110004", "memberType": "AGENT", "avatar": "FISH", "memberFullName": "Aqua Zone", "memberAddress": "Yuseong-gu, Daejeon", "memberDesc": "Freshwater fish, aquarium kits and decorations. Free water testing in store." },
+		{ "memberNick": "minji", "memberPhone": "01022220001", "memberType": "USER", "avatar": "DOG", "memberFullName": "Kim Minji", "memberDesc": "Proud owner of a corgi named Toto." },
+		{ "memberNick": "jisoo", "memberPhone": "01022220002", "memberType": "USER", "avatar": "CAT", "memberFullName": "Park Jisoo", "memberDesc": "Two cats, zero free time." },
+		{ "memberNick": "alexlee", "memberPhone": "01022220003", "memberType": "USER", "avatar": "FISH", "memberFullName": "Alex Lee", "memberDesc": "Aquarium hobbyist and bird lover." }
+	],
+	"products": [
+		{ "key": "golden-puppy", "seller": "happypaws", "productType": "PET", "productSpecies": "DOG", "productGender": "MALE", "productLocation": "SEOUL", "productPrice": 850, "productTitle": "Golden Retriever Puppy", "productDesc": "Friendly 10-week-old golden retriever. Vaccinated, microchipped and vet checked. Comes with a starter food pack." },
+		{ "key": "shiba-puppy", "seller": "happypaws", "productType": "PET", "productSpecies": "DOG", "productGender": "FEMALE", "productLocation": "SEOUL", "productPrice": 1200, "productTitle": "Shiba Inu Puppy", "productDesc": "Playful red shiba girl, 12 weeks old. Parents on site, house training started." },
+		{ "key": "puppy-kibble", "seller": "happypaws", "productType": "FOOD", "productSpecies": "DOG", "productGender": "MALE", "productLocation": "SEOUL", "productPrice": 45, "productTitle": "Grain-Free Puppy Kibble 5kg", "productDesc": "Chicken and sweet potato recipe for growing puppies. No grains, no artificial colors." },
+		{ "key": "rope-toy", "seller": "happypaws", "productType": "TOY", "productSpecies": "DOG", "productGender": "MALE", "productLocation": "INCHEON", "productPrice": 15, "productTitle": "Rope Tug Toy", "productDesc": "Durable cotton rope for tug and fetch. Helps clean teeth while playing." },
+		{ "key": "dog-collar", "seller": "happypaws", "productType": "ACCESSORY", "productSpecies": "DOG", "productGender": "MALE", "productLocation": "BUSAN", "productPrice": 28, "productTitle": "Leather Dog Collar", "productDesc": "Soft genuine leather collar with brass buckle and name tag. Sizes S to L." },
+		{ "key": "british-kitten", "seller": "meowmart", "productType": "PET", "productSpecies": "CAT", "productGender": "FEMALE", "productLocation": "BUSAN", "productPrice": 900, "productTitle": "British Shorthair Kitten", "productDesc": "Calm blue British shorthair kitten, 11 weeks old. Litter trained and vaccinated." },
+		{ "key": "persian-kitten", "seller": "meowmart", "productType": "PET", "productSpecies": "CAT", "productGender": "MALE", "productLocation": "DAEGU", "productPrice": 1100, "productTitle": "Persian Kitten", "productDesc": "Fluffy cream Persian boy with a sweet temper. Grooming guide included." },
+		{ "key": "salmon-catfood", "seller": "meowmart", "productType": "FOOD", "productSpecies": "CAT", "productGender": "FEMALE", "productLocation": "BUSAN", "productPrice": 32, "productTitle": "Salmon Cat Food 2kg", "productDesc": "Real salmon first ingredient, with taurine for healthy eyes and heart." },
+		{ "key": "feather-wand", "seller": "meowmart", "productType": "TOY", "productSpecies": "CAT", "productGender": "FEMALE", "productLocation": "SEOUL", "productPrice": 11, "productTitle": "Feather Wand Teaser", "productDesc": "Extendable wand with natural feathers and a bell. Hours of chasing fun." },
+		{ "key": "cat-bed", "seller": "meowmart", "productType": "ACCESSORY", "productSpecies": "CAT", "productGender": "FEMALE", "productLocation": "SEOUL", "productPrice": 55, "productTitle": "Cozy Cat Bed", "productDesc": "Round plush donut bed with a washable cover. Keeps your cat warm all winter." },
+		{ "key": "budgie", "seller": "birdnest", "productType": "PET", "productSpecies": "BIRD", "productGender": "MALE", "productLocation": "DAEGU", "productPrice": 60, "productTitle": "Hand-Raised Budgie", "productDesc": "Tame sky-blue budgie, steps up on your finger. Great first bird for families." },
+		{ "key": "cockatiel", "seller": "birdnest", "productType": "PET", "productSpecies": "BIRD", "productGender": "FEMALE", "productLocation": "GWANGJU", "productPrice": 180, "productTitle": "Cockatiel", "productDesc": "Gentle lutino cockatiel girl who loves head scratches and whistling." },
+		{ "key": "seed-mix", "seller": "birdnest", "productType": "FOOD", "productSpecies": "BIRD", "productGender": "MALE", "productLocation": "GYEONGJU", "productPrice": 12, "productTitle": "Seed Mix for Parakeets", "productDesc": "Millet, canary seed and oats with added vitamins. 1kg resealable bag." },
+		{ "key": "bird-swing", "seller": "birdnest", "productType": "TOY", "productSpecies": "BIRD", "productGender": "FEMALE", "productLocation": "DAEGU", "productPrice": 14, "productTitle": "Bird Swing and Bells", "productDesc": "Wooden swing with colorful beads and bells for small and medium birds." },
+		{ "key": "bird-cage", "seller": "birdnest", "productType": "ACCESSORY", "productSpecies": "BIRD", "productGender": "MALE", "productLocation": "DAEJON", "productPrice": 70, "productTitle": "Travel Bird Cage", "productDesc": "Lightweight cage with perch, two cups and a carry handle for vet trips." },
+		{ "key": "goldfish", "seller": "aquazone", "productType": "PET", "productSpecies": "FISH", "productGender": "MALE", "productLocation": "DAEJON", "productPrice": 25, "productTitle": "Fancy Goldfish", "productDesc": "Healthy oranda goldfish, about 6cm. Perfect for a cool-water tank." },
+		{ "key": "betta", "seller": "aquazone", "productType": "PET", "productSpecies": "FISH", "productGender": "MALE", "productLocation": "JEJU", "productPrice": 18, "productTitle": "Halfmoon Betta Fish", "productDesc": "Vivid halfmoon betta with a full tail. Needs a heated tank of 10L or more." },
+		{ "key": "fish-flakes", "seller": "aquazone", "productType": "FOOD", "productSpecies": "FISH", "productGender": "FEMALE", "productLocation": "CHONJU", "productPrice": 9, "productTitle": "Tropical Fish Flakes", "productDesc": "Complete daily food for tropical fish, enriched with spirulina." },
+		{ "key": "aqua-castle", "seller": "aquazone", "productType": "TOY", "productSpecies": "FISH", "productGender": "MALE", "productLocation": "JEJU", "productPrice": 22, "productTitle": "Aquarium Castle Decor", "productDesc": "Resin castle with swim-through tunnels. Safe for all freshwater fish." },
+		{ "key": "led-aquarium", "seller": "aquazone", "productType": "ACCESSORY", "productSpecies": "FISH", "productGender": "FEMALE", "productLocation": "GWANGJU", "productPrice": 120, "productTitle": "LED Aquarium Kit 40L", "productDesc": "Glass tank with LED lid, filter and heater. Everything you need to start." }
+	],
+	"articles": [
+		{ "author": "minji", "articleCategory": "RECOMMEND", "image": "DOG", "articleTitle": "Best chew toys for teething puppies", "articleContent": "Our corgi Toto chewed everything until we tried the rope tug toy. Rotate two or three toys so they stay interesting!" },
+		{ "author": "jisoo", "articleCategory": "FREE", "image": "CAT", "articleTitle": "How I introduced a second cat", "articleContent": "Separate rooms for a week, swap blankets, then short supervised visits. Now they nap together every afternoon." },
+		{ "author": "alexlee", "articleCategory": "NEWS", "image": "FISH", "articleTitle": "Aquarium meetup in Daejeon this Saturday", "articleContent": "Aqua Zone is hosting a free water testing and plant swap event. Bring a small sample of your tank water." },
+		{ "author": "happypaws", "articleCategory": "RECOMMEND", "image": "DOG", "articleTitle": "Puppy first week checklist", "articleContent": "Crate, puppy food, water bowl, collar with tag, chew toys and a vet appointment. Keep the schedule simple and calm." },
+		{ "author": "minji", "articleCategory": "HUMOR", "image": "CAT", "articleTitle": "My cat thinks the laptop is a bed", "articleContent": "Every time I start working, there she is. I bought a cozy cat bed and put it next to the desk. Partial success." },
+		{ "author": "birdnest", "articleCategory": "NEWS", "image": "BIRD", "articleTitle": "New budgie babies are ready", "articleContent": "Our spring clutch is weaned and hand-tamed. Visit the aviary in Daegu to meet them before choosing." }
+	],
+	"likes": {
+		"minji": ["golden-puppy", "shiba-puppy", "rope-toy", "british-kitten", "budgie", "cat-bed"],
+		"jisoo": ["british-kitten", "persian-kitten", "feather-wand", "cat-bed", "salmon-catfood", "golden-puppy"],
+		"alexlee": ["goldfish", "betta", "led-aquarium", "budgie", "cockatiel", "golden-puppy", "aqua-castle"],
+		"happypaws": ["cat-bed", "led-aquarium"],
+		"meowmart": ["golden-puppy", "budgie"]
+	},
+	"productComments": [
+		{ "author": "minji", "product": "golden-puppy", "text": "Such a sweet puppy! Is he good with kids?" },
+		{ "author": "happypaws", "product": "golden-puppy", "text": "Yes, very gentle. He grew up with our two children." },
+		{ "author": "jisoo", "product": "british-kitten", "text": "Beautiful coat. Can I visit this weekend?" },
+		{ "author": "meowmart", "product": "british-kitten", "text": "Of course, Saturday afternoon works for us." },
+		{ "author": "alexlee", "product": "led-aquarium", "text": "Bought this last month. Quiet filter and the light looks great." },
+		{ "author": "minji", "product": "rope-toy", "text": "Toto loves it, still in one piece after two weeks!" },
+		{ "author": "jisoo", "product": "cat-bed", "text": "Both of my cats fight over this bed." },
+		{ "author": "alexlee", "product": "budgie", "text": "Very tame, he says hello every morning now." },
+		{ "author": "minji", "product": "salmon-catfood", "text": "My friend's picky cat finally eats dinner." },
+		{ "author": "jisoo", "product": "feather-wand", "text": "Best five minutes of cardio for my lazy cat." }
+	],
+	"articleComments": [
+		{ "author": "jisoo", "article": 0, "text": "Rope toys saved our sofa too." },
+		{ "author": "alexlee", "article": 1, "text": "Great tips, thank you for sharing!" },
+		{ "author": "minji", "article": 2, "text": "I will bring my shrimp tank sample." },
+		{ "author": "jisoo", "article": 4, "text": "Same here, the keyboard is the warmest spot." }
+	],
+	"follows": {
+		"minji": ["happypaws", "meowmart"],
+		"jisoo": ["meowmart"],
+		"alexlee": ["aquazone", "birdnest", "happypaws"]
+	},
+	"sellerLikes": {
+		"minji": ["happypaws", "birdnest"],
+		"jisoo": ["meowmart"],
+		"alexlee": ["aquazone", "birdnest"]
+	}
+}
