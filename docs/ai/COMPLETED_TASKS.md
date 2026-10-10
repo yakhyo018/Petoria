@@ -132,3 +132,7 @@ UI decisions:
 | Idempotency | Existing members log in, existing seller catalogs are reused, interactions only on the first run (or `--force`) |
 | Note | `uploads/` (git-ignored) must exist with `product`, `member`, `article` folders. `productRank` stays 0 until `petoria-batch` runs |
 | Frontend | Petoria-next `a055f9c`: removed unused 3D fiber hero, `public/img/fiber`, `public/video` (~31 MB) and the three/@react-three/valtio/@pmndrs packages |
+
+## Frontend Fixes (2026-10-10)
+
+Petoria-next `29df312`: product reviews now load (GET_COMMENTS used an empty `commentRefId`), liked heart on product detail can unlike, liking a similar product no longer swaps the page product, mobile Top card like works, missing avatars no longer render as `API_URL//img/...`, profile save never sends a local avatar path, community comments use the default user avatar. DB check: like counters match like records, no duplicates.
